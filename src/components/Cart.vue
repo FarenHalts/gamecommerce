@@ -3,7 +3,7 @@
     <div>
         <span class="cart__title">Carrinho</span>
         <div class="cart__list" v-if="inCartGames.length">
-            <div class="cart__container" v-for="(item, index) in inCartGames" :key="index">
+            <div class="cart__container" v-for="(item, index) in inCartGames" :key="index" @click="removeGameFromCart(index)">
                 <div>
                     <game-image :game-image="item.image" :game-name="item.name" small />
                 </div>
@@ -14,6 +14,9 @@
                     <div class="cart__container__price">
                         R$ {{formatValue(item.price)}}
                     </div>
+                </div>
+                <div class="cart__remove">
+                    <img src="../assets/icons/delete.svg" width="15">
                 </div>
             </div>
         </div>
@@ -44,10 +47,8 @@
 
 <script>
 import GameImage from '@/components/GameImage.vue'
-import IconCartEmpty from '@/assets/icons/icon-cart-empty.vue';
-import {
-    mapGetters
-} from 'vuex';
+import IconCartEmpty from '@/assets/icons/icon-cart-empty.vue'
+import { mapGetters } from 'vuex'
 
 export default {
     name: "Cart",
@@ -59,6 +60,9 @@ export default {
         formatValue(value) {
             value = value.toFixed(2);
             return value.replace(".", ",");
+        },
+        removeGameFromCart(gameIndex){
+            this.$store.dispatch('removeGame', gameIndex)
         }
     },
     computed: {
@@ -113,6 +117,9 @@ export default {
         display: flex;
         gap: 10px;
         margin-bottom: 19px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: space-between;
 
         &:last-child {
             margin-bottom: 0;
@@ -130,6 +137,16 @@ export default {
             font-weight: bold;
             color: $black-cat;
         }
+
+        &:hover {
+            .cart__remove {
+                opacity: 100;
+            }
+        }
+    }
+
+    &__remove {
+        opacity: 0;
     }
 
     &__payment-container {
