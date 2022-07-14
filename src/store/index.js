@@ -5,13 +5,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    inCartGames: []
   },
   getters: {
+    inCartGames: (state) => {
+      return state.inCartGames
+    }
   },
   mutations: {
+    inCartGames(state, inCartGames) {
+      state.inCartGames.push(inCartGames);
+    }
   },
   actions: {
-  },
-  modules: {
+    inCartGames(context, inCartGames) {
+      context.commit('inCartGames', inCartGames);
+    }
   }
 })

@@ -1,6 +1,10 @@
 <template>
-  <div class="game-box" :class="{'game-box__small': small}">
-    <img class="game-image" :class="{'game-image__small': small}" :src="require(`../assets/images/${gameImage}`)" :alt="`${gameName} game image`">
+  <div class="game-image" :class="{'game-image__small': small}">
+    <img
+      :class="{'small': small}"
+      :src="require(`../assets/images/${gameImage}`)"
+      :alt="`${gameName} game image`"
+    >
   </div>
 </template>
 
@@ -27,7 +31,7 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/sass/variables.scss';
 
-.game-box{
+.game-image{
   width: 262px;
   height: 230px;
   background-color: $soft-peach;
@@ -38,17 +42,17 @@ export default {
     width: 60px;
     height: 53px;
   }
-}
 
-.game-image{
+img{
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 
-  &__small{
+  &.small{
     width: 40px;
     height: 40px;
   }
+}
 }
 </style>
