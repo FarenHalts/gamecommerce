@@ -12,7 +12,7 @@
                         {{item.name}}
                     </div>
                     <div class="cart__container__price">
-                        {{item.price}}
+                        R$ {{formatValue(item.price)}}
                     </div>
                 </div>
             </div>
@@ -22,15 +22,15 @@
         <div class="cart__payment-container">
             <div class="cart__payment-information">
                 <span class="cart__payment-information__title">subtotal</span>
-                <span class="cart__payment-information__price">R$ 300,33</span>
+                <span class="cart__payment-information__price">R$ {{formatValue(priceCalculate.subtotal)}}</span>
             </div>
             <div class="cart__payment-information">
                 <span class="cart__payment-information__title">frete</span>
-                <span class="cart__payment-information__price">R$ 235,43</span>
+                <span class="cart__payment-information__price">R$ {{formatValue(priceCalculate.shipping)}}</span>
             </div>
             <div class="cart__payment-information">
                 <span class="cart__payment-information__title">total</span>
-                <span class="cart__payment-information__total-price">R$ 235,64</span>
+                <span class="cart__payment-information__total-price">R$ {{formatValue(priceCalculate.total)}}</span>
             </div>
         </div>
         <button>finalizar compra</button>
@@ -55,8 +55,35 @@ export default {
         IconCartEmpty,
         GameImage
     },
+    methods: {
+        formatValue(value) {
+            value = value.toFixed(2);
+            return value.replace(".", ",");
+        }
+    },
     computed: {
-        ...mapGetters(['inCartGames'])
+        ...mapGetters(['inCartGames']),
+
+        priceCalculate: function () {
+            let obj = {
+                subtotal: 0,
+                shipping: 0,
+                price: 0
+            };
+
+            this.inCartGames.forEach(item => {
+                obj.subtotal += item.price
+            })
+
+            obj.shipping = 10 * this.inCartGames.length;
+            if (obj.subtotal > 250) {
+                obj.shipping = 0;
+            }
+
+            obj.total = obj.subtotal + obj.shipping;
+
+            return obj;
+        },
     }
 };
 </script>
@@ -133,12 +160,12 @@ export default {
             color: $black-cat;
         }
 
-        &:not(:first-child):not(:last-child){
+        &:not(:first-child):not(:last-child) {
             margin: 18px 0;
         }
     }
 
-    button{
+    button {
         background: $picton-blue;
         color: #fff;
         border: none;

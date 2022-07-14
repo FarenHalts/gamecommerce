@@ -3,14 +3,14 @@
     <div class="home-page__exposure">
         <div class="home-page__exposure-header">
             <span class="home-page__title">Games</span>
-            <select name="games" id="games">
+            <select name="games" id="games" v-model="filter">
                 <option value="score">Mais populares</option>
                 <option value="price">Preço</option>
-                <option value="asc">Ordem Alfabética</option>
+                <option value="name">Ordem Alfabética</option>
             </select>
         </div>
         <div class="home-page__exposure-games">
-            <game-box v-for="item in allGames" :key="item.id" :game-information="item" @add-to-cart="addGameToCart" />
+            <game-box v-for="item in sortedArray" :key="item.id" :game-information="item" @add-to-cart="addGameToCart" />
         </div>
     </div>
     <cart />
@@ -33,7 +33,8 @@ export default {
     },
     data() {
         return {
-            allGames: []
+            allGames: [],
+            filter: 'score'
         }
     },
     created() {
@@ -45,6 +46,32 @@ export default {
         },
         addGameToCart(game) {
             this.$store.dispatch('inCartGames', game)
+        }
+    },
+    computed: {
+        sortedArray: function () {
+            if (this.filter == "name") {
+                function compare(a, b) {
+                    if (a.name < b.name) return -1;
+                    if (a.name > b.name) return 1;
+                    return 0;
+                }
+                return this.allGames.sort(compare);
+            } else if (this.filter == "price") {
+                function compare(a, b) {
+                    if (a.price < b.price) return -1;
+                    if (a.price > b.price) return 1;
+                    return 0;
+                }
+                return this.allGames.sort(compare);
+            } else if (this.filter == "score") {
+                function compare(a, b) {
+                    if (a.score < b.score) return -1;
+                    if (a.score > b.score) return 1;
+                    return 0;
+                }
+                return this.allGames.sort(compare);
+            }
         }
     }
 }
