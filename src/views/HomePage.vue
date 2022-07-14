@@ -3,23 +3,52 @@
     <div class="home-page__exposure">
       <div class="home-page__exposure-header">
         <span class="home-page__title">Games</span>
-        <select name="cars" id="cars">
+        <select name="games" id="games">
           <option value="score">Mais populares</option>
           <option value="price">Preço</option>
           <option value="asc">Ordem Alfabética</option>
         </select>
       </div>
       <div class="home-page__exposure-games">
-        <div v-for="item in allGames" :key="item.id">
-          <game-image :image="item.image" />
+        <div @click="addGameToCart(item)" class="home-page__game-container" v-for="item in allGames" :key="item.id">
+          <game-image
+            :game-image="item.image"
+            :game-name="item.name"
+          />
+          <div class="home-page__game-name">
+            {{item.name}}
+          </div>
+          <div class="home-page__game-price">
+            R$ {{item.price}}
+          </div>
+          <div class="home-page__cart-add">
+            adicionar ao carrinho
+          </div>
         </div>
       </div>
     </div>
-
     <div class="home-page__cart">
       <span class="home-page__cart-title">Carrinho</span>
-
-      <div class="home-page__empty-cart">
+      <div class="home-page__cart-list" v-if="inCartGames">
+        <div class="home-page__cart-list__container" v-for="item in inCartGames" :key="item">
+          <div>
+            <game-image
+            :game-image="item.image"
+            :game-name="item.name"
+            small
+          />
+          </div>
+          <div>
+            <div class="home-page__cart-list__title">
+              {{item.name}}
+            </div>
+            <div class="home-page__cart-list__price">
+              {{item.price}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="home-page__empty-cart" v-if="inCartGames.length == 0">
         <icon-cart-empty />
         <span>Até o momento, <br> o seu carrinho está vazio</span>
       </div>
@@ -39,7 +68,8 @@ export default {
   },
   data() {
     return{
-      allGames: []
+      allGames: [],
+      inCartGames: []
     }
   },
   created(){
@@ -49,6 +79,10 @@ export default {
     getGameData(){
       this.allGames = require('../mock/products.json');
       console.log(this.allGames);
+    },
+    addGameToCart(game){
+      this.inCartGames.push(game)
+      console.log(this.inCartGames);
     }
   }
 }
@@ -62,8 +96,8 @@ export default {
   display: grid;
   grid-auto-columns: 1fr;
   grid-template-columns: 1.5fr 0.5fr;
-  grid-template-rows: 325px;
-  // grid-template-rows: 1fr 1fr;
+  // grid-template-rows: 325px;
+  grid-template-rows: 0.5fr 1fr;
   gap: 0 40px;
   grid-template-areas:
     "Exposure Cart"
@@ -94,6 +128,47 @@ export default {
     gap: 30px 30px;
   }
 
+  &__game-container{
+    cursor: pointer;
+
+    &:hover{
+      .home-page__game-name,.home-page__game-price{
+        display: none;
+      }
+
+      .home-page__cart-add{
+        display: flex;
+      }
+    }
+  }
+
+  &__game-name{
+    margin-top: 10px;
+    color: $smokey-grey;
+    text-align: center;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  &__game-price{
+    margin-top: 2px;
+    text-align: center;
+    color: $cyan-blue;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  &__cart-add{
+    display: none;
+    color: $cyan-blue;
+    font-weight: bold;
+    margin-top: 23px;
+    font-size: 16px;
+    line-height: 22px;
+    justify-content: center;
+  }
+
   &__title{
     font-weight: $bold;
     font-size: 48px;
@@ -110,6 +185,33 @@ export default {
   &__cart-title{
     font-size: 18px;
     font-weight: $bold;
+  }
+
+  &__cart-list{
+    margin-top: 22px;
+
+    &__container{
+      display: flex;
+      gap: 10px;
+      margin-bottom: 19px;
+
+      &:last-child{
+        margin-bottom: 0;
+      }
+    }
+
+    &__title{
+      font-size: 14px;
+      line-height: 19px;
+      color: $boulder;
+    }
+
+    &__price{
+      font-size: 14px;
+      line-height: 19px;
+      font-weight: bold;
+      color: $black-cat;
+    }
   }
 
   &__empty-cart{

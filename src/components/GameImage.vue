@@ -1,6 +1,6 @@
 <template>
-  <div class="game-box">
-    <img class="game-image" src="../assets/images/call-of-duty-wwii.png" alt="">
+  <div class="game-box" :class="{'game-box__small': small}">
+    <img class="game-image" :class="{'game-image__small': small}" :src="require(`../assets/images/${gameImage}`)" :alt="`${gameName} game image`">
   </div>
 </template>
 
@@ -8,16 +8,19 @@
 export default {
   name: 'GameImage',
   props: {
-    image: {
+    gameImage: {
       type: String,
       required: true
     },
-  },
-  computed: {
-    returnImage(){
-      
+    gameName: {
+      type: String,
+      required: true
+    },
+    small: {
+      type: Boolean,
+      default: false
     }
-  }
+  },
 }
 </script>
 
@@ -30,6 +33,11 @@ export default {
   background-color: $soft-peach;
   border-radius: 3px;
   position: relative;
+
+  &__small{
+    width: 60px;
+    height: 53px;
+  }
 }
 
 .game-image{
@@ -37,5 +45,10 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+
+  &__small{
+    width: 40px;
+    height: 40px;
+  }
 }
 </style>
