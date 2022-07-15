@@ -18,18 +18,14 @@
 </template>
 
 <script>
-import GameImage from '@/components/GameImage.vue'
 import GameBox from '@/components/GameBox.vue'
 import Cart from '@/components/Cart.vue'
-import IconCartEmpty from '@/assets/icons/icon-cart-empty.vue'
 
 export default {
     name: 'HomeView',
     components: {
-        GameImage,
         GameBox,
-        Cart,
-        IconCartEmpty,
+        Cart
     },
     data() {
         return {
