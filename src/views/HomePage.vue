@@ -102,6 +102,7 @@ export default {
 
         select {
             padding: 10px 18px;
+            cursor: pointer;
             border: 1px solid $gray;
             border-radius: 4px;
             width: 260px;
