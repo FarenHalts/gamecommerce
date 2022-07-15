@@ -9,6 +9,15 @@ body{
     margin: 0;
 }
 
+h1{
+  margin: 0;
+  line-height: 0;
+}
+
+select {
+	appearance: none;
+}
+
 #app{
     max-width: 1310px;
     margin-left: auto;

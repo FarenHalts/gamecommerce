@@ -2,7 +2,7 @@
 <div class="home-page">
     <div class="home-page__exposure">
         <div class="home-page__exposure-header">
-            <span class="home-page__title">Games</span>
+            <h1 class="home-page__title">Games</h1>
             <select name="games" id="games" v-model="filter">
                 <option value="score">Mais populares</option>
                 <option value="price">Preço</option>
@@ -85,7 +85,6 @@ export default {
     display: grid;
     grid-auto-columns: 1fr;
     grid-template-columns: 1.5fr 0.5fr;
-    // grid-template-rows: 325px;
     grid-template-rows: 0.5fr 1fr;
     gap: 0 40px;
     grid-template-areas:
@@ -102,11 +101,19 @@ export default {
         margin-bottom: 44px;
 
         select {
-            margin: 13px 0px;
             padding: 10px 18px;
             border: 1px solid $gray;
             border-radius: 4px;
             width: 260px;
+            height: 40px;
+            background-image: url("../assets/icons/arrow-down-icon.svg");
+            background-repeat: no-repeat;
+            background-position-x: 95%;
+            background-position-y: 16px;
+
+            &:focus{
+                outline: none;
+            }
         }
     }
 
@@ -121,6 +128,7 @@ export default {
         font-weight: $bold;
         font-size: 48px;
         color: $black;
+        line-height: 45px;
     }
 }
 </style>
