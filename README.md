@@ -1,4 +1,5 @@
 # gamecommerce
+You can access this project running on: [Games Store e-commerce](https://farenhalts-gamecommerce.herokuapp.com)
 
 ## Project setup
 ```
