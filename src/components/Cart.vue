@@ -36,7 +36,8 @@
                 <span class="cart__payment-information__total-price">R$ {{formatValue(priceCalculate.total)}}</span>
             </div>
         </div>
-        <button>finalizar compra</button>
+        <button @click="clickedButton = true">finalizar compra</button>
+        <div v-if="clickedButton" style="text-align: center">Compra finalizada</div>
     </div>
     <div class="cart__empty" v-if="inCartGames.length == 0">
         <icon-cart-empty />
@@ -55,6 +56,11 @@ export default {
     components: {
         IconCartEmpty,
         GameImage
+    },
+    data() {
+        return{
+            clickedButton: false
+        }
     },
     methods: {
         formatValue(value) {
