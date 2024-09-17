@@ -1,5 +1,5 @@
 # gamecommerce
-You can access this project running on: [Games Store e-commerce](https://farenhalts-gamecommerce.herokuapp.com)
+You can access this project running on: [Games Store e-commerce](https://gamecommerce-omega.vercel.app)
 
 ## Project setup
 ```
